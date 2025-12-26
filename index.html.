@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HF Chat</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+</head>
+<body>
+
+    <div id="login-overlay">
+        <div class="login-box">
+            <h2 style="color:#6c5ce7">HF Chat</h2>
+            <input type="password" id="pass-field" placeholder="أدخل رمز الدخول الخاص">
+            <button id="login-btn">دخول</button>
+        </div>
+    </div>
+
+    <header>
+        <div class="user-info">
+            <b class="logo">HF Chat</b><br>
+            <span id="p-dot" class="p-dot"></span> <span id="p-text" style="font-size: 10px;">متصل الآن</span>
+        </div>
+        <div class="top-actions">
+            <button id="theme-btn" class="btn-svg" title="الإعدادات">⚙️</button>
+            <button onclick="location.reload()" class="exit-btn">خروج</button>
+        </div>
+    </header>
+
+    <div id="chat-flow"></div>
+
+    <div id="rec-indicator" style="display: none; text-align: center; color: red; font-size: 12px; padding: 5px; background: rgba(255,0,0,0.1);">
+        🔴 جاري تسجيل الصوت... اضغط على المايك مرة أخرى للإرسال
+    </div>
+
+    <footer>
+        <button class="btn-svg" id="img-trigger" title="إرسال صورة">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+        </button>
+        <input type="file" id="file-hidden" hidden accept="image/*">
+
+        <button class="btn-svg" id="mic-control" title="تسجيل صوتي">
+            <svg id="mic-svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
+        </button>
+
+        <input type="text" id="main-input" placeholder="اكتب رسالة...">
+
+        <button class="btn-svg" id="send-btn" title="إرسال">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+        </button>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
