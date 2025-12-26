@@ -1,0 +1,41 @@
+const firebaseConfig = {
+  apiKey: "AIzaSyBexfDOFUrIE5xkdfFC6dpWzYTmuuTpDi0",
+  authDomain: "fh-chat-da54b.firebaseapp.com",
+  projectId: "fh-chat-da54b",
+  storageBucket: "fh-chat-da54b.firebasestorage.app",
+  messagingSenderId: "697871153338",
+  appId: "1:697871153338:web:b111a912e1659d14c42a83",
+  databaseURL: "https://fh-chat-da54b-default-rtdb.firebaseio.com"
+};
+
+if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+const UID = "User_" + Math.floor(Math.random() * 1000);
+
+document.getElementById('login-btn').onclick = () => {
+    const inputPass = document.getElementById('pass-field').value;
+    const secureHash = "MDcwOQ=="; // تشفير الرمز 0709
+    if (btoa(inputPass) === secureHash) {
+        document.getElementById('login-overlay').style.display = 'none';
+        startApp();
+    } else { alert("الرمز خطأ!"); }
+};
+
+function startApp() {
+    db.ref("chat").on("child_added", (snapshot) => {
+        const data = snapshot.val();
+        const flow = document.getElementById('chat-flow');
+        const div = document.createElement('div');
+        div.className = `bubble ${data.u === UID ? 'me' : 'other'}`;
+        if(data.t === 'txt') div.innerText = data.v;
+        else if(data.t === 'img') div.innerHTML = `<img src="${data.v}" style="width:100%; border-radius:10px;">`;
+        else if(data.t === 'aud') div.innerHTML = `<audio controls src="${data.v}"></audio>`;
+        flow.appendChild(div);
+        flow.scrollTop = flow.scrollHeight;
+    });
+
+    document.getElementById('send-btn').onclick = () => {
+        const inp = document.getElementById('main-input');
+        if(inp.value.trim()) { db.ref("chat").push({ u: UID, t: 'txt', v: inp.value }); inp.value = ''; }
+    };
+}
